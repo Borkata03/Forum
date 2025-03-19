@@ -1,4 +1,7 @@
+using Forum.Core.Contracts;
+using Forum.Core.Services;
 using Forum.Data;
+using Forum.Infrastructure.Common;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,13 +13,21 @@ namespace Forum
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-            //test
-            //test2
+          
+           
             var connectionString = builder.Configuration.GetConnectionString("ForumDbContextConnection") ?? throw new InvalidOperationException("Connection string 'ForumDbContextConnection' not found.");
             builder.Services.AddDbContext<ForumDbContext>(options =>
                 options.UseSqlServer(connectionString));
+
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+            builder.Services.AddScoped<IRepository, Repository>();
+
+            builder.Services.AddScoped<ICategoryService, CategoryService>();
+            builder.Services.AddScoped<ICommentService, CommentService>();
+            builder.Services.AddScoped<IThreadService, ThreadService>();
+            builder.Services.AddScoped<IPostService, PostService>();
+
 
             builder.Services.AddDefaultIdentity<IdentityUser>(
                 options =>
@@ -33,7 +44,7 @@ namespace Forum
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
+          
             if (app.Environment.IsDevelopment())
             {
                 app.UseMigrationsEndPoint();
@@ -41,7 +52,7 @@ namespace Forum
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+               
                 app.UseHsts();
             }
 
