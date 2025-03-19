@@ -21,7 +21,7 @@ namespace Forum.Data
                 .HasForeignKey(s => s.ThreadId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Forum.Infrastructure.Data.Models.Thread>()
+            modelBuilder.Entity<Infrastructure.Data.Models.Thread>()
               .HasOne(s => s.Category)
               .WithMany(t => t.Threads)
               .HasForeignKey(s => s.CategoryId)
@@ -36,7 +36,7 @@ namespace Forum.Data
         }
 
         public DbSet<Category> Categories { get; set; }
-        public DbSet<Forum.Infrastructure.Data.Models.Thread> Threads { get; set; }
+        public DbSet<Infrastructure.Data.Models.Thread> Threads { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<Comment> Comments { get; set; }
     }
