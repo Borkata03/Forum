@@ -1,4 +1,4 @@
-﻿using Forum.Infrastructure.Data.Constants;
+﻿using Forum.Infrastructure.Constants;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
