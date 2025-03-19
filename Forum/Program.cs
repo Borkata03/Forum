@@ -11,6 +11,7 @@ namespace Forum
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            //test
             var connectionString = builder.Configuration.GetConnectionString("ForumDbContextConnection") ?? throw new InvalidOperationException("Connection string 'ForumDbContextConnection' not found.");
             builder.Services.AddDbContext<ForumDbContext>(options =>
                 options.UseSqlServer(connectionString));
