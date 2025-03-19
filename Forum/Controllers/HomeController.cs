@@ -4,11 +4,11 @@ using System.Diagnostics;
 
 namespace Forum.Controllers
 {
-    public class CategoryController : BaseController
+    public class HomeController : Controller
     {
-        private readonly ILogger<CategoryController> _logger;
+        private readonly ILogger<HomeController> _logger;
 
-        public CategoryController(ILogger<CategoryController> logger)
+        public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
         }
@@ -18,10 +18,7 @@ namespace Forum.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
+       
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

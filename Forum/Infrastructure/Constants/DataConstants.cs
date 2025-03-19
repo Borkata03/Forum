@@ -16,5 +16,8 @@ namespace Forum.Infrastructure.Constants
 
         public const int CommentReportMaxLength = 300;
 
+        public const int PostDescriptionMinLength = 15;
+        public const int PostDescriptionMaxLength = 500;
+
     }
 }

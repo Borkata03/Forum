@@ -23,9 +23,8 @@
   <ItemGroup>
     <Folder Include="Core\Models\Comment\" />
     <Folder Include="Core\Models\Category\" />
-    <Folder Include="Core\Models\Post\" />
     <Folder Include="Core\Models\Thread\" />
-    <Folder Include="Views\Home\" />
+    <Folder Include="Views\Comment\" />
   </ItemGroup>
 
 </Project>

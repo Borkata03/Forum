@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Forum.Infrastructure.Constants;
 
 namespace Forum.Infrastructure.Data.Models
 {
@@ -14,6 +15,10 @@ namespace Forum.Infrastructure.Data.Models
 
         [Comment("Image of the post.")]
         public string ImageUrl { get; set; } = string.Empty;
+
+        [Required]
+        [StringLength(Forum.Infrastructure.Constants.DataConstants.PostDescriptionMaxLength, MinimumLength = Forum.Infrastructure.Constants.DataConstants.PostDescriptionMinLength)]
+        public string Description { get; set; } = string.Empty;
 
         [Required]
         [Comment("Date when the post was created.")]
