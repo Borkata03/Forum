@@ -1,21 +1,28 @@
-﻿using Forum.Models;
+﻿using Forum.Core.Contracts;
+using Forum.Extensions;
+using Forum.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
 namespace Forum.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IPostService service;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger,IPostService _service)
         {
             _logger = logger;
+            service = _service;
+
         }
 
+        [AllowAnonymous]
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction(nameof(PostController.All), "Post");
         }
 
        

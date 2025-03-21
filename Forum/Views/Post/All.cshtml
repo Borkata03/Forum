@@ -1,0 +1,32 @@
+﻿@model IEnumerable<PostAllViewModel>
+
+
+@{
+    ViewData["Title"] = "All Posts";
+}
+
+<h2 class="text-center">Posts</h2>
+<div class="container mt-4">
+    <div class="row">
+        @foreach (var post in Model)
+        {
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <img src="@post.ImageUrl" class="card-img-top" alt="Post Image">
+                    <div class="card-body">
+                        <p class="d-flex justify-content-center">@post.Description</p>
+                        <p class="d-flex justify-content-center">@DateTime.Parse(post.CreatedAt).ToString("dd MMM yyyy", System.Globalization.CultureInfo.InvariantCulture)</p>
+                    </div>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a href="/Comments/Create" class="btn btn-primary mt-2">Comment</a>
+                    }
+                    else
+                    {
+                        <a href="/Identity/Account/Login" class="btn btn-secondary mt-2">Yоu must be login to comment</a>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>

@@ -1,4 +1,5 @@
-﻿using Forum.Models;
+﻿using Forum.Extensions;
+using Forum.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -16,6 +17,7 @@ namespace Forum.Controllers
         public IActionResult Index()
         {
             return View();
+            
         }
 
         public IActionResult Privacy()

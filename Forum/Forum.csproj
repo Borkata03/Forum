@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -22,9 +22,8 @@
 
   <ItemGroup>
     <Folder Include="Core\Models\Comment\" />
-    <Folder Include="Core\Models\Category\" />
-    <Folder Include="Core\Models\Thread\" />
     <Folder Include="Views\Comment\" />
+    <Folder Include="Views\Category\" />
   </ItemGroup>
 
 </Project>
