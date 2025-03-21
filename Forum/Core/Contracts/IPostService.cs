@@ -9,10 +9,7 @@ namespace Forum.Core.Contracts
 
         Task<bool> ExistByIdAsync(int postId);
 
-        Task AddPostAsync(AddPostFormViewModel model, int userID);
-
-        Task<bool> ThreadExists(int threadID);
-        
+        Task AddPostAsync(AddPostFormViewModel model);
 
     }
 }

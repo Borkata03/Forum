@@ -51,7 +51,7 @@ namespace Forum.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Comments", (string)null);
+                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("Forum.Infrastructure.Data.Models.Category", b =>
@@ -78,7 +78,7 @@ namespace Forum.Data.Migrations
 
                     b.HasIndex("CreatorId");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("Forum.Infrastructure.Data.Models.Post", b =>
@@ -93,11 +93,6 @@ namespace Forum.Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2")
                         .HasComment("Date when the post was created.");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
@@ -119,7 +114,7 @@ namespace Forum.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Posts", (string)null);
+                    b.ToTable("Posts");
                 });
 
             modelBuilder.Entity("Forum.Infrastructure.Data.Models.Thread", b =>
@@ -155,7 +150,7 @@ namespace Forum.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Threads", (string)null);
+                    b.ToTable("Threads");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
