@@ -1,4 +1,5 @@
 ﻿using Forum.Core.Contracts;
+using Forum.Core.Models.Post;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,8 +24,27 @@ namespace Forum.Controllers
             }
 
             return View(model);
-        }   
 
+        }
+
+        /* [HttpGet]
+         public async Task <IActionResult> Add()
+         {
+         
+
+         }
+        */
+
+       /* [HttpPost]
+
+        public async Task <IActionResult> Add(AddPostFormViewModel model)
+        {
+
+            //check if the thread ID exists
+
+            //get and post
+        }
+       */
         public IActionResult Index()
         {
             return View();

@@ -4,6 +4,7 @@ using Forum.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Forum.Data.Migrations
 {
     [DbContext(typeof(ForumDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250321162825_br")]
+    partial class br
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,7 +54,7 @@ namespace Forum.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Comments", (string)null);
+                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("Forum.Infrastructure.Data.Models.Category", b =>
@@ -78,7 +81,7 @@ namespace Forum.Data.Migrations
 
                     b.HasIndex("CreatorId");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("Forum.Infrastructure.Data.Models.Post", b =>
@@ -119,7 +122,7 @@ namespace Forum.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Posts", (string)null);
+                    b.ToTable("Posts");
                 });
 
             modelBuilder.Entity("Forum.Infrastructure.Data.Models.Thread", b =>
@@ -155,7 +158,7 @@ namespace Forum.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Threads", (string)null);
+                    b.ToTable("Threads");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

@@ -10,6 +10,10 @@ namespace Forum.Core.Models.Post
 
         public string Description { get; set; } = string.Empty;
 
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+
+        public string CreatorId = string.Empty;
+
         public string Creator { get; set; } = string.Empty;
 
         public int ThreadId { get; set; }
