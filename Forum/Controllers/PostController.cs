@@ -29,5 +29,15 @@ namespace Forum.Controllers
         {
             return View();
         }
+
+        public async Task<IActionResult> Add()
+        {
+            return View();
+        }
+
+        public async Task<IActionResult> Mine()
+        {
+            return View();
+        }
     }
 }
