@@ -13,6 +13,7 @@ namespace Forum
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            //test
           
            
             var connectionString = builder.Configuration.GetConnectionString("ForumDbContextConnection") ?? throw new InvalidOperationException("Connection string 'ForumDbContextConnection' not found.");
