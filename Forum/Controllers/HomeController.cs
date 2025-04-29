@@ -22,10 +22,10 @@ namespace Forum.Controllers
         [AllowAnonymous]
         public IActionResult Index()
         {
-            return RedirectToAction(nameof(PostController.All), "Post");
+            return View();  
         }
 
-       
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

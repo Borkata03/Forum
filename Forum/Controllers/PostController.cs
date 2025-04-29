@@ -15,6 +15,7 @@ namespace Forum.Controllers
             postService = _postService;
             threadService = _threadService;
         }
+
         [AllowAnonymous]
         public async Task<IActionResult> All()
         {

@@ -1,26 +1,37 @@
-﻿@model IEnumerable<Forum.Core.Models.Thread.AllThreadsViewModel>
+﻿@page
+@using Forum.Areas.Identity.Pages.Account
+@model LoginModel
 
 @{
-    ViewData["Title"] = "All Threads";
+    ViewData["Title"] = "Log in";
 }
+
+<div class="d-flex justify-content-center align-items-center mt-5">
+    <div class="card p-4" style="width: 400px;">
+        <h2 class="text-center">Log in</h2>
+        <form id="account" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Email" class="form-control" autocomplete="username" placeholder="name@example.com" />
+                <label asp-for="Input.Email">Email</label>
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Password" class="form-control" autocomplete="current-password" placeholder="password" />
+                <label asp-for="Input.Password">Password</label>
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="w-100 btn btn-dark">Log in</button>
+        </form>
+    </div>
+</div>
 
 <style>
     body {
         background: linear-gradient(45deg, #808080, #000000, #ffffff);
         color: white;
         font-family: Arial, sans-serif;
-    }
-
-    .table th,
-    .table td {
-        color: black;
-        background-color: white;
-        font-style: italic;
-    }
-
-    .table thead {
-        background-color: #343a40;
-        color: white;
     }
 
     .card {
@@ -32,44 +43,6 @@
     }
 </style>
 
-<div class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-md-10">
-            <div class="card shadow-lg rounded-4 border border-secondary">
-                <div class="card-header text-white text-center rounded-top-4">
-                    <h3 class="mb-0">📌 All Threads</h3>
-                </div>
-                <div class="card-body p-4">
-                    @if (Model != null && Model.Any())
-                    {
-                        <table class="table table-striped table-hover text-center align-middle">
-                            <thead class="table-dark">
-                                <tr>
-                                    <th scope="col">🧵 Thread Name</th>
-                                    <th scope="col">📅 Created Date</th>
-                                    <th scope="col">📂 Category</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var thread in Model)
-                                {
-                                    <tr>
-                                        <td>@thread.Name</td>
-                                        <td>@thread.CreatedDate</td>
-                                        <td>@thread.Category</td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    }
-                    else
-                    {
-                        <div class="alert alert-info text-center" role="alert">
-                            No threads found.
-                        </div>
-                    }
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
