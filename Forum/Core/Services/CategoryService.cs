@@ -4,6 +4,7 @@ using Forum.Infrastructure.Common;
 using Forum.Infrastructure.Data.Models;
 using Forum.Extensions;
 using Microsoft.DiaSymReader;
+using Microsoft.EntityFrameworkCore;
 
 namespace Forum.Core.Services
 {
@@ -20,13 +21,23 @@ namespace Forum.Core.Services
             var category = new Category()
             {
                 Name = model.Name,
-                CreatorId = model.UserId
+   
             };
 
            await repository.AddAsync<Category>(category);
            await repository.SaveChangesAsync();
+        }
 
 
+        public async Task<List<CategoryViewModel>> GetCategoriesForDropdownAsync()
+        {
+            return await repository.All<Category>()
+                .Select(c => new CategoryViewModel
+                {
+                    Id = c.Id,
+                    Name = c.Name
+                })
+                .ToListAsync();
         }
     }
 }

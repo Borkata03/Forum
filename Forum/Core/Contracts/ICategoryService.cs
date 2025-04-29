@@ -6,6 +6,8 @@ namespace Forum.Core.Contracts
     {
         Task AddCategoryAsync(AddCategoryFormViewModel model);
 
+        Task<List<CategoryViewModel>> GetCategoriesForDropdownAsync();
+
 
     }
 }

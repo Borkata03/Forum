@@ -51,7 +51,7 @@ namespace Forum.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comments", (string)null);
                 });
 
             modelBuilder.Entity("Forum.Infrastructure.Data.Models.Category", b =>
@@ -78,7 +78,7 @@ namespace Forum.Data.Migrations
 
                     b.HasIndex("CreatorId");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("Forum.Infrastructure.Data.Models.Post", b =>
@@ -114,7 +114,7 @@ namespace Forum.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Posts");
+                    b.ToTable("Posts", (string)null);
                 });
 
             modelBuilder.Entity("Forum.Infrastructure.Data.Models.Thread", b =>
@@ -150,7 +150,7 @@ namespace Forum.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Threads");
+                    b.ToTable("Threads", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
