@@ -1,6 +1,112 @@
-﻿@{
-	ViewBag.Title = "Add Post";
+﻿@using Forum.Core.Models.Post
+@using Forum.Core.Models.Thread
+@model AddPostFormViewModel
+
+@{
+    ViewData["Title"] = "Add Post";
 }
 
-<h2 class="text-center"> @ViewBag.Title</h2>
-<hr />
+<style>
+    body {
+        background: linear-gradient(45deg, #808080, #000000, #ffffff);
+        color: white;
+        font-family: Arial, sans-serif;
+    }
+
+    .card {
+        box-shadow: 0 2px 10px rgba(255, 255, 255, 0.5);
+    }
+
+    .card-header {
+        background-color: #6c757d;
+        color: white;
+    }
+
+    .form-label {
+        color: black;
+    }
+
+    .form-select,
+    .form-control {
+        background-color: #f8f9fa;
+        color: black;
+        font-style: italic;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+    }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            border-color: #545b62;
+        }
+</style>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg rounded-4 border border-secondary">
+                <div class="card-header bg-secondary text-white text-center rounded-top-4">
+                    <h3 class="mb-0">📝 Add New Post</h3>
+                </div>
+                <div class="card-body p-5">
+                    <form asp-action="Add" method="post" enctype="multipart/form-data">
+
+                        <!-- Post Description -->
+                        <div class="mb-3">
+                            <label asp-for="Description" class="form-label">Post Description</label>
+                            <textarea asp-for="Description" class="form-control" rows="3" placeholder="Write something..."></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+
+                        <!-- Upload Image -->
+                        <div class="mb-3">
+                            <label asp-for="ImageUrl" class="form-label">Upload Image (Optional)</label>
+
+                            <div class="input-group">
+                                <label class="input-group-text btn btn-secondary" for="imageUpload">Choose File</label>
+                                <input type="file" asp-for="ImageUrl" class="d-none" id="imageUpload" onchange="updateFileName()" />
+                                <input type="text" class="form-control" id="fileName" placeholder="No file chosen" readonly />
+                            </div>
+
+                            <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                        </div>
+
+                        
+
+                        <!-- Select Thread -->
+                        <div class="mb-3">
+                            <label asp-for="ThreadId" class="form-label">Select Thread</label>
+                            <select asp-for="ThreadId" class="form-select"
+                                    asp-items="@(new SelectList(Model.Threads, nameof(ThreadViewModel.Id), nameof(ThreadViewModel.Name)))">
+                                <option value="">-- Select Thread --</option>
+                            </select>
+                            <span asp-validation-for="ThreadId" class="text-danger"></span>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="mt-5 d-flex justify-content-center">
+                            <button type="submit" class="btn btn-secondary btn-lg rounded-pill">
+                                ✍️ Add Post
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function updateFileName() {
+        const fileInput = document.getElementById('imageUpload');
+        const fileNameField = document.getElementById('fileName');
+        fileNameField.value = fileInput.files.length > 0 ? fileInput.files[0].name : 'No file chosen';
+    }
+</script>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
