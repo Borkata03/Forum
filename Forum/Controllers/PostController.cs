@@ -29,6 +29,17 @@ namespace Forum.Controllers
             return View(model);
         }
 
+        public async Task<IActionResult> Details(int id)
+        {
+            if (await postService.ExistByIdAsync(id) == false)
+
+            {
+                return BadRequest();
+            }
+            var model = await postService.PostDetailsById(id);
+
+			return View(model);
+        }
 
         [HttpGet]
         public async Task<IActionResult> Add()

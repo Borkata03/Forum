@@ -4,9 +4,14 @@
     {
         IQueryable<T> All<T>() where T : class;
 
+
+
         Task AddAsync<T>(T Entity) where T : class;
 
-        Task<int> SaveChangesAsync();
+        public IQueryable<T> AllReadOnly<T>() where T : class;
+
+
+		Task<int> SaveChangesAsync();
 
         Task<T?> GetByIdAsync<T>(object id) where T : class;
 

@@ -7,7 +7,10 @@ namespace Forum.Core.Contracts
 
         Task<IEnumerable<PostAllViewModel>> AllPostAsync();
 
-        Task<bool> ExistByIdAsync(int postId);
+        Task<PostAllViewModel> PostDetailsById(int id);
+
+
+		Task<bool> ExistByIdAsync(int postId);
 
         Task AddPostAsync(AddPostFormViewModel model);
 

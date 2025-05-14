@@ -26,7 +26,13 @@ namespace Forum.Infrastructure.Common
             return DbSet<T>();
         }
 
-        public async Task DeleteAsync<T>(object id) where T : class
+		public IQueryable<T> AllReadOnly<T>() where T : class
+		{
+			return DbSet<T>()
+				.AsNoTracking();
+		}
+
+		public async Task DeleteAsync<T>(object id) where T : class
         {
             T? entity = await GetByIdAsync<T>(id);
 

@@ -33,6 +33,20 @@ namespace Forum.Core.Services
                  .ToListAsync();         
         }
 
+        public async Task<PostAllViewModel> PostDetailsById (int id)
+        {
+            return await repository.AllReadOnly<Post>()
+                .Where(p => p.Id == id)
+                .Select(p => new PostAllViewModel()
+                {
+                    Description = p.Description,
+                    CreatedAt = p.CreatedAt.ToString()
+                    
+
+                }).FirstAsync();
+                
+        }
+
         public async Task<bool> ExistByIdAsync(int postId)
         {
             var exist = await repository.All<Post>().AnyAsync(s => s.Id == postId);
