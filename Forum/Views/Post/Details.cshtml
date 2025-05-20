@@ -1,3 +1,89 @@
-﻿
+﻿@model PostAllViewModel
 
-<h1> TEST </h1>
+@{
+    ViewData["Title"] = "Post Details";
+}
+
+<style>
+    body {
+        background: linear-gradient(45deg, #808080, #000000, #ffffff);
+        color: white;
+        font-family: Arial, sans-serif;
+    }
+
+    .post-details-card {
+        max-width: 700px;
+        margin: 2rem auto;
+        box-shadow: 0 2px 10px rgba(255, 255, 255, 0.5);
+        border-radius: 1.25rem;
+        background-color: #2d2d2d;
+        overflow: hidden;
+    }
+
+    .post-img {
+        object-fit: cover;
+        height: 350px;
+        width: 100%;
+    }
+
+    .post-body {
+        padding: 2rem;
+        background-color: grey;
+    }
+
+    .post-desc {
+        color: #000000;
+        font-size: 1.25rem;
+        font-weight: 500;
+        text-align: center;
+        margin-bottom: 1rem;
+        font-style: italic;
+    }
+
+    .post-date {
+        color: #333;
+        font-size: 0.875rem;
+        font-weight: 400;
+        text-align: center;
+        margin-top: 5px;
+        font-style: italic;
+    }
+
+    .comment-btn {
+        display: block;
+        border-radius: 50px;
+        margin: 2rem auto 0;
+        width: 60%;
+        padding: 1rem 2rem;
+        font-size: 1.25rem;
+        background-color: white;
+        color: black;
+        border: none;
+        transition: transform 0.2s ease-in-out, background-color 0.2s;
+        text-align: center;
+    }
+
+        .comment-btn:hover {
+            transform: scale(1.05);
+            background-color: #f1f1f1;
+        }
+</style>
+
+<h2 class="text-center my-5">📌 Post Details</h2>
+
+<div class="post-details-card">
+    <img src="@Model.ImageUrl" alt="Post Image" class="post-img" />
+    <div class="post-body">
+        <p class="post-desc">@Model.Description</p>
+        <p class="post-date">Posted on: @DateTime.Parse(Model.CreatedAt).ToString("dd MMM yyyy", System.Globalization.CultureInfo.InvariantCulture)</p>
+
+        @if (User.Identity.IsAuthenticated)
+        {
+            <a href="/Comments/Create" class="btn comment-btn">💬 Add a Comment</a>
+        }
+        else
+        {
+            <a href="/Identity/Account/Login" class="btn comment-btn">🔒 Login to Comment</a>
+        }
+    </div>
+</div>
