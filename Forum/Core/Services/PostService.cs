@@ -53,5 +53,23 @@ namespace Forum.Core.Services
 
             return exist;
         }
+
+      public async Task <int> Create (AddPostFormViewModel model, string userId)
+        {
+            Post post = new Post()
+            {
+                UserId = userId,
+                ImageUrl = model.ImageUrl,
+                Description=model.Description,
+                CreatedAt = DateTime.Now,
+                ThreadId = model.ThreadId  
+
+            };
+            //finish
+            await repository.AddAsync(post);
+            await repository.SaveChangesAsync();
+            return post.Id;
+
+        }
     }
 }

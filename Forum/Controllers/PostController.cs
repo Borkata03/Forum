@@ -1,5 +1,6 @@
 ﻿using Forum.Core.Contracts;
 using Forum.Core.Models.Post;
+using Forum.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -42,6 +43,7 @@ namespace Forum.Controllers
         }
 
         [HttpGet]
+       
         public async Task<IActionResult> Add()
         {
             var threadName = await threadService.GetAllThreadsNameAsync();
@@ -57,6 +59,16 @@ namespace Forum.Controllers
 
             return View(model);
         
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Add(AddPostFormViewModel model)
+        {
+
+            int  postId = await postService.Create(model, User.Id());
+
+            return RedirectToAction(nameof(Details), new {id = postId});
+           //finish
         }
 
         public async Task<IActionResult> Mine()

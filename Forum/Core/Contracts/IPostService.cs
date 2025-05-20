@@ -14,5 +14,8 @@ namespace Forum.Core.Contracts
 
         Task AddPostAsync(AddPostFormViewModel model);
 
-    }
+        public Task<int> Create(AddPostFormViewModel model, string UserId);
+
+
+	}
 }
