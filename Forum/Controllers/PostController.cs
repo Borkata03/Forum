@@ -73,7 +73,15 @@ namespace Forum.Controllers
 
         public async Task<IActionResult> Mine()
         {
-            return View();
+            var userId = User.Id();
+
+            IEnumerable<PostAllViewModel> model;
+
+            model = await postService.AllPostsByUserId(userId);
+
+            return View(model);
+
+
         }
     }
 }

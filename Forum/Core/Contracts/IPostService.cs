@@ -16,6 +16,9 @@ namespace Forum.Core.Contracts
 
         public Task<int> Create(AddPostFormViewModel model, string UserId);
 
+        public Task<IEnumerable<PostAllViewModel>> AllPostsByUserId(string userId);
 
-	}
+
+
+    }
 }

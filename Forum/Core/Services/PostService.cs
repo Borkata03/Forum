@@ -26,6 +26,7 @@ namespace Forum.Core.Services
                  .All<Post>()
                  .Select(P => new PostAllViewModel()
                  {
+                     Id= P.Id,
                      ImageUrl = P.ImageUrl,
                      Description =P.Description,
                      CreatedAt = P.CreatedAt.ToString()
@@ -70,6 +71,22 @@ namespace Forum.Core.Services
             await repository.SaveChangesAsync();
             return post.Id;
 
+        }
+
+        public async Task <IEnumerable<PostAllViewModel>> AllPostsByUserId(string userId)
+        {
+            return await repository.AllReadOnly<Post>()
+                .Where (p => p.UserId == userId)
+                .Select(p => new PostAllViewModel() {
+                    Id = p.Id,
+                    Description = p.Description,
+                    ImageUrl = p.ImageUrl,
+                    CreatedAt = p.CreatedAt.ToString()
+                }).ToListAsync();
+               
+                
+                
+                     
         }
     }
 }
