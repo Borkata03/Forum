@@ -88,5 +88,13 @@ namespace Forum.Core.Services
                 
                      
         }
+        
+        public async Task DeleteAsync (int postId)
+        {
+            await repository.DeleteAsync<Post>(postId);
+            await repository.SaveChangesAsync();
+        }
+
+
     }
 }

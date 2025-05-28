@@ -30,6 +30,7 @@ namespace Forum.Controllers
             return View(model);
         }
 
+        [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
             if (await postService.ExistByIdAsync(id) == false)
@@ -71,6 +72,7 @@ namespace Forum.Controllers
            //finish
         }
 
+        [HttpGet]
         public async Task<IActionResult> Mine()
         {
             var userId = User.Id();
@@ -83,5 +85,41 @@ namespace Forum.Controllers
 
 
         }
+
+        [HttpGet]
+        public async Task <IActionResult> Delete (int id)
+        {
+
+            if (await postService.ExistByIdAsync(id) == false)
+            {
+                return BadRequest();
+            }
+
+            var post = await postService.PostDetailsById(id);
+
+            var model = new PostAllViewModel()
+            {
+                Id = post.Id,
+                Description = post.Description,
+                ImageUrl = post.ImageUrl,
+                CreatedAt = post.CreatedAt
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+
+        public async Task<IActionResult> Delete (PostAllViewModel model)
+        {
+            if (await postService.ExistByIdAsync(model.Id) == false)
+            {
+                return BadRequest();
+            }
+
+            await postService.DeleteAsync(model.Id);
+            return RedirectToAction(nameof(All));
+        }
+
     }
 }

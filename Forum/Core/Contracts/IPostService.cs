@@ -18,6 +18,8 @@ namespace Forum.Core.Contracts
 
         public Task<IEnumerable<PostAllViewModel>> AllPostsByUserId(string userId);
 
+        public Task DeleteAsync(int postId);
+
 
 
     }

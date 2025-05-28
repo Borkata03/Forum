@@ -63,35 +63,35 @@
             transform: scale(1.05);
             background-color: #f1f1f1;
         }
+
+    .post-actions {
+        display: flex;
+        gap: 1rem;
+        flex-direction: column;
+        margin-top: 1rem;
+    }
 </style>
 
 <h2 class="text-center my-5">👤 My Posts</h2>
 
-@if (!Model.Any())
-{
-    <div class="text-center mt-5">
-        <h4>You haven't posted anything yet.</h4>
-        <a href="/Post/Add" class="btn post-btn mt-4" style="max-width: 300px; margin: auto;">➕ Create a New Post</a>
-    </div>
-}
-else
-{
-    <div class="container">
-        <div class="row">
-            @foreach (var post in Model)
-            {
-                <div class="col-md-4 mb-4">
-                    <div class="post-card">
-                        <img src="@post.ImageUrl" alt="Post Image" class="post-img">
-                        <div class="post-body">
-                            <p class="post-desc">@post.Description</p>
-                            <p class="post-date">@DateTime.Parse(post.CreatedAt).ToString("dd MMM yyyy", System.Globalization.CultureInfo.InvariantCulture)</p>
+<div class="container">
+    <div class="row">
+        @foreach (var post in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="post-card">
+                    <img src="@post.ImageUrl" alt="Post Image" class="post-img">
+                    <div class="post-body">
+                        <p class="post-desc">@post.Description</p>
+                        <p class="post-date">@DateTime.Parse(post.CreatedAt).ToString("dd MMM yyyy", System.Globalization.CultureInfo.InvariantCulture)</p>
 
-                            <a href="/Post/Details/@post.Id" class="btn post-btn mt-2">🔍 View Details</a>
+                        <div class="post-actions">
+                            <a href="/Post/Details/@post.Id" class="btn post-btn">🔍 View Details</a>
+                            <a href="/Post/Delete/@post.Id" class="btn post-btn">🗑️ Delete Post</a>
                         </div>
                     </div>
                 </div>
-            }
-        </div>
+            </div>
+        }
     </div>
-}
+</div>
