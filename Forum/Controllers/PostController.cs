@@ -1,8 +1,10 @@
 ﻿using Forum.Core.Contracts;
 using Forum.Core.Models.Post;
+using Forum.Core.Services;
 using Forum.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Forum.Controllers
 {
@@ -10,6 +12,7 @@ namespace Forum.Controllers
     {
         private readonly IPostService postService;
         private readonly IThreadService threadService;
+        private readonly ICommentService commentService;
 
         public PostController(IPostService _postService, IThreadService _threadService)
         {
@@ -120,6 +123,34 @@ namespace Forum.Controllers
             await postService.DeleteAsync(model.Id);
             return RedirectToAction(nameof(All));
         }
+
+        [HttpGet]
+        public IActionResult Comment(int postId)
+        {
+            var model = new CommentFormModel
+            {
+                PostId = postId
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Comment(CommentFormModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            await commentService.AddCommentAsync(model, userId);
+
+            return RedirectToAction("Details", "Post", new { id = model.PostId });
+        }
+
+
 
     }
 }

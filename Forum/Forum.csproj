@@ -21,9 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Core\Models\Comment\" />
-    <Folder Include="Views\Comment\" />
     <Folder Include="Views\Category\" />
+    <Folder Include="Views\NewFolder\" />
   </ItemGroup>
 
 </Project>

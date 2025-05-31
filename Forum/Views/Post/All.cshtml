@@ -201,9 +201,12 @@
                     <p class="post-desc">@post.Description</p>
                     <p class="post-date">@DateTime.Parse(post.CreatedAt).ToString("dd MMM yyyy", System.Globalization.CultureInfo.InvariantCulture)</p>
 
+                <a href="/Post/Details/@post.Id" class="btn post-btn mt-2">📖 Open Post</a>
+
                 @if (User.Identity.IsAuthenticated)
                 {
-                            <a href="/Comments/Create" class="btn post-btn mt-2">💬 Comment</a>
+                    <a asp-controller="Comment" asp-action="Create" asp-route-postId="@post.Id" class="btn post-btn mt-2">💬 Comment</a>
+
                 }
                 else
                 {

@@ -30,6 +30,7 @@ namespace Forum
             builder.Services.AddScoped<IPostService, PostService>();
 
 
+
             builder.Services.AddDefaultIdentity<IdentityUser>(
                 options =>
                 {

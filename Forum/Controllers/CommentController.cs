@@ -1,12 +1,36 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Forum.Core.Contracts;
+using Forum.Extensions;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Forum.Controllers
 {
     public class CommentController : BaseController
     {
-        public IActionResult Index()
+        private readonly ICommentService commentService;
+
+        public CommentController(ICommentService commentService)
         {
-            return View();
+            this.commentService = commentService;
         }
+
+        [HttpGet]
+        public IActionResult Create(int postId)
+        {
+            var model = new CommentFormModel { PostId = postId };
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(CommentFormModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            await commentService.AddCommentAsync(model, User.Id());
+            return RedirectToAction("Details", "Post", new { id = model.PostId });
+        }
+
     }
 }

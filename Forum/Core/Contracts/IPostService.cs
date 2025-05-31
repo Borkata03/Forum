@@ -20,6 +20,8 @@ namespace Forum.Core.Contracts
 
         public Task DeleteAsync(int postId);
 
+      
+
 
 
     }
