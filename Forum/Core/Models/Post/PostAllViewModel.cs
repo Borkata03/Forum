@@ -11,6 +11,8 @@ namespace Forum.Core.Models.Post
 
         public string CreatedAt { get; set; } = string.Empty;
 
+        public List<CommentViewModel> Comments { get; set; } = new();
+
 
     }
 }

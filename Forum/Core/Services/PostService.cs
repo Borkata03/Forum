@@ -34,19 +34,24 @@ namespace Forum.Core.Services
                  .ToListAsync();         
         }
 
-        public async Task<PostAllViewModel> PostDetailsById (int id)
+        public async Task<PostAllViewModel> PostDetailsById(int id)
         {
             return await repository.AllReadOnly<Post>()
                 .Where(p => p.Id == id)
                 .Select(p => new PostAllViewModel()
                 {
+                    Id = p.Id,
+                    ImageUrl = p.ImageUrl,
                     Description = p.Description,
-                    CreatedAt = p.CreatedAt.ToString()
-                    
-
+                    CreatedAt = p.CreatedAt.ToString("dd MMM yyyy"),
+                    Comments = p.Comments.Select(c => new CommentViewModel
+                    {
+                        Content = c.Content,
+                        UserName = c.User.UserName
+                    }).ToList()
                 }).FirstAsync();
-                
         }
+
 
         public async Task<bool> ExistByIdAsync(int postId)
         {
