@@ -17,14 +17,6 @@ namespace Forum.Infrastructure.Data.Models
         [Comment("The name of the category.")]
         public string Name { get; set; } = string.Empty;
 
-        [Required]
-        [Comment("Identifier of the user who made the Category.")]
-        public string CreatorId { get; set; } = string.Empty;
-
-        [ForeignKey(nameof(CreatorId))]
-        public IdentityUser Creator { get; set; } = null!;
-
-
         [Comment("Collection of threads in this category.")]
         public ICollection<Thread> Threads { get; set; } = new List<Thread>();
 

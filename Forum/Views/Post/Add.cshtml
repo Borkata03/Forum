@@ -21,24 +21,22 @@
 
             <!-- Upload Image -->
             <div class="form-group mb-3">
-                <label asp-for="ImageUrl"></label>
-                <div class="input-group">
-                    <label class="input-group-text btn btn-custom" for="imageUpload">Choose File</label>
-                    <input type="file" asp-for="ImageUrl" class="d-none" id="imageUpload" onchange="updateFileName()" />
-                    <input type="text" class="form-control" id="fileName" placeholder="No file chosen" readonly />
-                </div>
+                <label asp-for="ImageUrl" class="form-label"></label>
+                <input type="url" asp-for="ImageUrl" class="form-control" placeholder="Enter image URL" />
                 <span asp-validation-for="ImageUrl" class="text-danger"></span>
             </div>
 
-            <!-- Thread Select -->
-            <div class="form-group mb-3">
-                <label asp-for="ThreadId"></label>
-                <select asp-for="ThreadId" class="form-control"
-                        asp-items="@(new SelectList(Model.Threads, nameof(ThreadViewModel.Id), nameof(ThreadViewModel.Name)))">
-                    <option value="">-- Select Thread --</option>
+            <div class="mb-3">
+                <label for="ThreadId" class="form-label">Select Thread</label>
+                <select class="form-control" id="ThreadId" name="ThreadId" required>
+                    <option value="">-- Select a Thread --</option>
+                    @foreach (var thread in Model.Threads)
+                    {
+                        <option value="@thread.Id">@thread.Name</option>
+                    }
                 </select>
-                <span asp-validation-for="ThreadId" class="text-danger"></span>
             </div>
+
 
             <!-- Submit -->
             <div class="d-flex justify-content-center mt-4">

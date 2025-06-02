@@ -16,18 +16,6 @@ namespace Forum.Core.Services
         {
             repository = _repository;
         }
-        public async Task AddCategoryAsync(AddCategoryFormViewModel model)
-        {
-            var category = new Category()
-            {
-                Name = model.Name,
-   
-            };
-
-           await repository.AddAsync<Category>(category);
-           await repository.SaveChangesAsync();
-        }
-
 
         public async Task<List<CategoryViewModel>> GetCategoriesForDropdownAsync()
         {

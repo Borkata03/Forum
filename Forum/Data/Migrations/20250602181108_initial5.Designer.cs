@@ -4,6 +4,7 @@ using Forum.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Forum.Data.Migrations
 {
     [DbContext(typeof(ForumDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250602181108_initial5")]
+    partial class initial5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -63,6 +66,11 @@ namespace Forum.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("CreatorId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)")
+                        .HasComment("Identifier of the user who made the Category.");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(25)
@@ -71,109 +79,9 @@ namespace Forum.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.HasIndex("CreatorId");
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Chat"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Car"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Fitness"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Technology"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Gaming"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "Movies & TV"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Name = "Music"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Name = "Books"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Name = "Travel"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Name = "Food & Cooking"
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Name = "Education"
-                        },
-                        new
-                        {
-                            Id = 12,
-                            Name = "Programming"
-                        },
-                        new
-                        {
-                            Id = 13,
-                            Name = "Science"
-                        },
-                        new
-                        {
-                            Id = 14,
-                            Name = "Art & Design"
-                        },
-                        new
-                        {
-                            Id = 15,
-                            Name = "Photography"
-                        },
-                        new
-                        {
-                            Id = 16,
-                            Name = "Health & Wellness"
-                        },
-                        new
-                        {
-                            Id = 17,
-                            Name = "Business & Finance"
-                        },
-                        new
-                        {
-                            Id = 18,
-                            Name = "Relationships"
-                        },
-                        new
-                        {
-                            Id = 19,
-                            Name = "Parenting"
-                        },
-                        new
-                        {
-                            Id = 20,
-                            Name = "Pets & Animals"
-                        });
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("Forum.Infrastructure.Data.Models.Post", b =>
@@ -472,6 +380,17 @@ namespace Forum.Data.Migrations
                     b.Navigation("Post");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Forum.Infrastructure.Data.Models.Category", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "Creator")
+                        .WithMany()
+                        .HasForeignKey("CreatorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Creator");
                 });
 
             modelBuilder.Entity("Forum.Infrastructure.Data.Models.Post", b =>

@@ -4,6 +4,7 @@ using Forum.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Forum.Data.Migrations
 {
     [DbContext(typeof(ForumDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250602182650_addedCategories")]
+    partial class addedCategories
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -63,6 +66,11 @@ namespace Forum.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("CreatorId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)")
+                        .HasComment("Identifier of the user who made the Category.");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(25)
@@ -71,107 +79,129 @@ namespace Forum.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreatorId");
+
                     b.ToTable("Categories");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
+                            CreatorId = "",
                             Name = "Chat"
                         },
                         new
                         {
                             Id = 2,
+                            CreatorId = "",
                             Name = "Car"
                         },
                         new
                         {
                             Id = 3,
+                            CreatorId = "",
                             Name = "Fitness"
                         },
                         new
                         {
                             Id = 4,
+                            CreatorId = "",
                             Name = "Technology"
                         },
                         new
                         {
                             Id = 5,
+                            CreatorId = "",
                             Name = "Gaming"
                         },
                         new
                         {
                             Id = 6,
+                            CreatorId = "",
                             Name = "Movies & TV"
                         },
                         new
                         {
                             Id = 7,
+                            CreatorId = "",
                             Name = "Music"
                         },
                         new
                         {
                             Id = 8,
+                            CreatorId = "",
                             Name = "Books"
                         },
                         new
                         {
                             Id = 9,
+                            CreatorId = "",
                             Name = "Travel"
                         },
                         new
                         {
                             Id = 10,
+                            CreatorId = "",
                             Name = "Food & Cooking"
                         },
                         new
                         {
                             Id = 11,
+                            CreatorId = "",
                             Name = "Education"
                         },
                         new
                         {
                             Id = 12,
+                            CreatorId = "",
                             Name = "Programming"
                         },
                         new
                         {
                             Id = 13,
+                            CreatorId = "",
                             Name = "Science"
                         },
                         new
                         {
                             Id = 14,
+                            CreatorId = "",
                             Name = "Art & Design"
                         },
                         new
                         {
                             Id = 15,
+                            CreatorId = "",
                             Name = "Photography"
                         },
                         new
                         {
                             Id = 16,
+                            CreatorId = "",
                             Name = "Health & Wellness"
                         },
                         new
                         {
                             Id = 17,
+                            CreatorId = "",
                             Name = "Business & Finance"
                         },
                         new
                         {
                             Id = 18,
+                            CreatorId = "",
                             Name = "Relationships"
                         },
                         new
                         {
                             Id = 19,
+                            CreatorId = "",
                             Name = "Parenting"
                         },
                         new
                         {
                             Id = 20,
+                            CreatorId = "",
                             Name = "Pets & Animals"
                         });
                 });
@@ -472,6 +502,17 @@ namespace Forum.Data.Migrations
                     b.Navigation("Post");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Forum.Infrastructure.Data.Models.Category", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "Creator")
+                        .WithMany()
+                        .HasForeignKey("CreatorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Creator");
                 });
 
             modelBuilder.Entity("Forum.Infrastructure.Data.Models.Post", b =>

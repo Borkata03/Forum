@@ -94,9 +94,9 @@ namespace Forum.Core.Services
                      
         }
         
-        public async Task DeleteAsync (int postId)
+        public async Task DeleteAsync (int Id)
         {
-            await repository.DeleteAsync<Post>(postId);
+            await repository.DeleteAsync<Post>(Id);
             await repository.SaveChangesAsync();
         }
 
