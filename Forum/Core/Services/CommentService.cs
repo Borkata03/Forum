@@ -30,9 +30,11 @@ public class CommentService : ICommentService
             .Where(c => c.PostId == postId)
             .Select(c => new CommentViewModel
             {
+                Id = c.Id,
                 Content = c.Content,
                 UserName = c.User.UserName,
-                CreatedAt = c.Post.CreatedAt.ToString("dd MMM yyyy")
+                CreatedAt = c.Post.CreatedAt.ToString("dd MMM yyyy"),
+                UserId = c.User.Id
             }).ToListAsync();
     }
 

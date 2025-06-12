@@ -1,9 +1,13 @@
 ﻿@model PostAllViewModel
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> UserManager
 
 @{
     ViewData["Title"] = "Post Details";
 }
-
+@{
+    string currentUserId = UserManager.GetUserId(User);
+}
 <style>
     body {
         background: linear-gradient(45deg, #808080, #000000, #ffffff);
@@ -122,7 +126,16 @@
             {
                 <div class="comment">
                     <div class="comment-content">@comment.Content</div>
-                    <div class="comment-meta">Posted by: @comment.UserName </div>
+                    <div class="comment-meta">– @comment.UserName on @comment.CreatedAt</div>
+
+                    @if (comment.UserId == currentUserId)
+                    {
+                        <form asp-controller="Comment" asp-action="Delete" method="post">
+                            <input type="hidden" name="Id" value="@comment.Id" />
+                            <input type="hidden" name="PostId" value="@Model.Id" />
+                            <button type="submit" class="btn btn-danger btn-sm mt-2">🗑 Delete</button>
+                        </form>
+                    }
                 </div>
             }
         }

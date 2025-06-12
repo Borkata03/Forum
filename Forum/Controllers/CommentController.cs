@@ -7,6 +7,7 @@ namespace Forum.Controllers
     public class CommentController : BaseController
     {
         private readonly ICommentService commentService;
+        private readonly IPostService postService;
 
         public CommentController(ICommentService commentService)
         {
@@ -31,6 +32,22 @@ namespace Forum.Controllers
             await commentService.AddCommentAsync(model, User.Id());
             return RedirectToAction("Details", "Post", new { id = model.PostId });
         }
+
+
+        [HttpPost]
+
+        public async Task<IActionResult> Delete(CommentDeleteModel model)
+        {
+
+            await commentService.DeleteAsync(model.Id);
+
+
+            return RedirectToAction("Details", "Post", new { id = model.PostId });
+
+
+        }
+
+
 
     }
 }
