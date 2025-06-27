@@ -120,6 +120,13 @@ namespace Forum.Controllers
                 return BadRequest();
             }
 
+            var commentsToDelete = await commentService.GetCommentsByPostIdAsync(model.Id);
+            foreach(var comment in commentsToDelete)
+            {
+                await commentService.DeleteAsync(comment.Id);
+            }
+
+
             await postService.DeleteAsync(model.Id);
             return RedirectToAction(nameof(All));
         }

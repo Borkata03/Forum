@@ -9,6 +9,7 @@ namespace Forum.Core.Services
     public class PostService : IPostService
     {
         private readonly IRepository repository;
+        private readonly ICommentService commentService;
 
         public PostService(IRepository _repository)
         {
@@ -100,6 +101,7 @@ namespace Forum.Core.Services
         
         public async Task DeleteAsync (int Id)
         {
+           
             await repository.DeleteAsync<Post>(Id);
             await repository.SaveChangesAsync();
         }

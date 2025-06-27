@@ -44,7 +44,6 @@ namespace Forum.Controllers
 
             return RedirectToAction("Details", "Post", new { id = model.PostId });
 
-
         }
 
 
