@@ -37,7 +37,6 @@ namespace Forum.Controllers
         public async Task<IActionResult> Details(int id)
         {
             if (await postService.ExistByIdAsync(id) == false)
-
             {
                 return BadRequest();
             }

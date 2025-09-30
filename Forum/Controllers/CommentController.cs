@@ -1,4 +1,7 @@
-﻿using Forum.Core.Contracts;
+﻿
+using BogaNet.BWF;
+using BogaNet.BWF.Filter;
+using Forum.Core.Contracts;
 using Forum.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,9 +12,10 @@ namespace Forum.Controllers
         private readonly ICommentService commentService;
         private readonly IPostService postService;
 
-        public CommentController(ICommentService commentService)
+        public CommentController(ICommentService commentService, IPostService postService)
         {
             this.commentService = commentService;
+            this.postService = postService;
         }
 
         [HttpGet]
@@ -24,8 +28,28 @@ namespace Forum.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CommentFormModel model)
         {
+            
             if (!ModelState.IsValid)
+                return View(model);
+
+             BadWordFilter.Instance.LoadFiles(true, BWFConstants.BWF_LTR);
+            //List<string> badWords = new List<string>();
+
+            //var words = model.Content.Split(" ").ToArray();
+
+            //foreach (var item in words)
+            //{
+            //    if (Pacifier.Instance.Contains(item.ToString()))
+            //    {
+            //        badWords.Add(item.ToString());
+            //    }
+            //}
+
+            if (Pacifier.Instance.Contains(model.Content))
             {
+               
+                ModelState.AddModelError(nameof(model.Content), "The comment contains inappropriate language.");
+                
                 return View(model);
             }
 
@@ -35,18 +59,13 @@ namespace Forum.Controllers
 
 
         [HttpPost]
-
         public async Task<IActionResult> Delete(CommentDeleteModel model)
         {
-
             await commentService.DeleteAsync(model.Id);
-
-
             return RedirectToAction("Details", "Post", new { id = model.PostId });
 
+
+
         }
-
-
-
     }
 }
