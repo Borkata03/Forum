@@ -4,6 +4,7 @@ using Forum.Data;
 using Forum.Infrastructure.Common;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.ML;
 
 namespace Forum
 {
@@ -13,9 +14,9 @@ namespace Forum
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            
-          
-           
+
+
+
             var connectionString = builder.Configuration.GetConnectionString("ForumDbContextConnection") ?? throw new InvalidOperationException("Connection string 'ForumDbContextConnection' not found.");
             builder.Services.AddDbContext<ForumDbContext>(options =>
                 options.UseSqlServer(connectionString));
@@ -28,6 +29,14 @@ namespace Forum
             builder.Services.AddScoped<ICommentService, CommentService>();
             builder.Services.AddScoped<IThreadService, ThreadService>();
             builder.Services.AddScoped<IPostService, PostService>();
+            builder.Services.AddSingleton<PredictionEngine<CommentData, CommentPrediction>>(sp =>
+            {
+                var mlContext = new MLContext();
+                var modelPath = @"C:\Users\bvasi\source\repos\Forum\model.zip";
+                var mlModel = mlContext.Model.Load(modelPath, out var schema);
+                return mlContext.Model.CreatePredictionEngine<CommentData, CommentPrediction>(mlModel);
+            });
+
 
 
 
@@ -47,7 +56,7 @@ namespace Forum
 
             var app = builder.Build();
 
-          
+
             if (app.Environment.IsDevelopment())
             {
                 app.UseMigrationsEndPoint();
@@ -55,7 +64,7 @@ namespace Forum
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-               
+
                 app.UseHsts();
             }
 
@@ -72,6 +81,8 @@ namespace Forum
             app.MapRazorPages();
 
             app.Run();
+
+
         }
     }
 }

@@ -1,9 +1,7 @@
-﻿
-using BogaNet.BWF;
-using BogaNet.BWF.Filter;
-using Forum.Core.Contracts;
+﻿using Forum.Core.Contracts;
 using Forum.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.ML;
 
 namespace Forum.Controllers
 {
@@ -11,11 +9,13 @@ namespace Forum.Controllers
     {
         private readonly ICommentService commentService;
         private readonly IPostService postService;
+        private readonly PredictionEngine<CommentData, CommentPrediction> predEngine;
 
-        public CommentController(ICommentService commentService, IPostService postService)
+        public CommentController(ICommentService commentService, IPostService postService, PredictionEngine<CommentData, CommentPrediction> predEngine)
         {
             this.commentService = commentService;
             this.postService = postService;
+            this.predEngine = predEngine;
         }
 
         [HttpGet]
@@ -28,28 +28,14 @@ namespace Forum.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CommentFormModel model)
         {
-            
             if (!ModelState.IsValid)
                 return View(model);
 
-             BadWordFilter.Instance.LoadFiles(true, BWFConstants.BWF_LTR);
-            //List<string> badWords = new List<string>();
+            var prediction = predEngine.Predict(new CommentData { Content = model.Content });
 
-            //var words = model.Content.Split(" ").ToArray();
-
-            //foreach (var item in words)
-            //{
-            //    if (Pacifier.Instance.Contains(item.ToString()))
-            //    {
-            //        badWords.Add(item.ToString());
-            //    }
-            //}
-
-            if (Pacifier.Instance.Contains(model.Content))
+            if (prediction.IsToxic)
             {
-               
-                ModelState.AddModelError(nameof(model.Content), "The comment contains inappropriate language.");
-                
+                ModelState.AddModelError(nameof(model.Content), "The comment contains inappropriate or toxic language.");
                 return View(model);
             }
 
@@ -58,14 +44,12 @@ namespace Forum.Controllers
         }
 
 
+
         [HttpPost]
         public async Task<IActionResult> Delete(CommentDeleteModel model)
         {
             await commentService.DeleteAsync(model.Id);
             return RedirectToAction("Details", "Post", new { id = model.PostId });
-
-
-
         }
     }
 }

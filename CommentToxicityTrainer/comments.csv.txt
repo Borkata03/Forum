@@ -1,0 +1,22 @@
+Content,IsToxic
+You are amazing!,false
+Това е страхотен урок,false
+Buen trabajo en el proyecto,false
+Gut gemacht,false
+I really appreciate your help,false
+Merci pour votre aide,false
+Ich liebe dieses Tutorial,false
+Your explanation is clear,false
+Fantástico trabajo,false
+Keep up the good work,false
+I hate you,true
+Ти си пълен идиот,true
+Esto es basura,true
+Du bist ein dummer Mensch,true
+No me soporto,true
+Idiota verdadero,true
+Go away loser,true
+Не мога да те понасям глупако,true
+Das ist lächerlich du Idiot,true
+You are pathetic,true
+
